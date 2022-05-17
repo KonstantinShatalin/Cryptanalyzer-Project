@@ -6,10 +6,11 @@ import java.util.List;
 import java.util.Scanner;
 
 public class CryptAnalyzer {
+    static Path path = Path.of("C:\\Users\\Константин\\Desktop\\Work\\text.txt");
+    static Path pathNew = Path.of("C:\\Users\\Константин\\Desktop\\Work\\textNew.txt");
 
     public static void main(String[] args) {
-        Path path = Path.of("C:\\Users\\Константин\\Desktop\\Work\\text.txt");
-        Path pathNew = Path.of("C:\\Users\\Константин\\Desktop\\Work\\textNew.txt");
+
         Scanner scanner = new Scanner(System.in);
         System.out.println("Пожалуйста, введите ключь для зашифровки данных!");
         int key = scanner.nextInt();
@@ -47,7 +48,6 @@ public class CryptAnalyzer {
         }
 
     private static void encryption(int key, String message) {
-        Path pathNew = Path.of("C:\\Users\\Константин\\Desktop\\Work\\textNew.txt");
         String string = "";
         for (int i = 0; i < message.length(); i++) {
             char c = message.charAt(i);
@@ -65,11 +65,8 @@ public class CryptAnalyzer {
                     c -= 33;
             }
             string += c;
-            try (FileWriter writer = new FileWriter(String.valueOf(pathNew),true)) {
+            try (FileWriter writer = new FileWriter(String.valueOf(pathNew))) {
                 writer.write(string);
-
-
-
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -80,7 +77,7 @@ public class CryptAnalyzer {
 
         private static void decrypt(int key,String message) {
         int k = Integer.parseInt("-" + key);
-        String string = "";
+        StringBuilder string = new StringBuilder();
         for (int i = 0; i < message.length(); i++) {
             char c = message.charAt(i);
             if (c >= 'а' && c <= 'я')
@@ -98,10 +95,11 @@ public class CryptAnalyzer {
                 if (c > 'Я')
                     c -= 33;
             }
-            string += c;
+            string.append(c);
         }
         System.out.println(message + " После расшифровки: " + string);
     }
+
 
 
 
