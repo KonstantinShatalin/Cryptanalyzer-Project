@@ -34,8 +34,8 @@ public class CryptAnalyzer {
                     while ((position = bruteForce.find(messageBrute, resultBrute, position + 1)) != -1)
                         System.out.println(position);
 
-                    System.out.println("Message -> " + messageBrute);
-                    System.out.print("Result -> " + resultBrute);
+                    //System.out.println("Message -> " + messageBrute);
+                    //System.out.print("Result -> " + resultBrute);
                 }
             }
         } else if (chose.equalsIgnoreCase("other")) {
