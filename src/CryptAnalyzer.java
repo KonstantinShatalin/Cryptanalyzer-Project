@@ -6,46 +6,72 @@ import java.util.List;
 import java.util.Scanner;
 
 public class CryptAnalyzer {
-    static Path path = Path.of("C:\\Users\\Константин\\Desktop\\Work\\text.txt");
-    static Path pathNew = Path.of("C:\\Users\\Константин\\Desktop\\Work\\textNew.txt");
+    static Path pathEncryption = Path.of("C:\\Users\\Константин\\Desktop\\Work\\text.txt");
+    static Path pathDecrypt = Path.of("C:\\Users\\Константин\\Desktop\\Work\\textNew.txt");
 
     public static void main(String[] args) {
+        BruteForce bruteForce = new BruteForce();
+        Scanner scanChoseMethod = new Scanner(System.in);
+        System.out.println("Введите, пожалуйста название метода которым хотите воспользоватся \"brut\" или \"other\"");
+        String chose = scanChoseMethod.nextLine();
 
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Пожалуйста, введите ключь для зашифровки данных!");
-        int key = scanner.nextInt();
 
-        List<String> listPass = null;
-        List<String> listPassNew = null;
-        try {
-            listPass = Files.readAllLines(path);
-            listPassNew = Files.readAllLines(pathNew);
-        }catch (IOException e){
-            e.printStackTrace();
-        }
 
-        if (key > 0) {
-            assert listPass != null;
-            for (String message : listPass) {
-                encryption(key, message);
+        if (chose.equalsIgnoreCase("brut")) {
+
+            List<String> listPassResult = null;
+            List<String> listPassNewMessage = null;
+            try {
+                listPassResult = Files.readAllLines(pathEncryption);
+                listPassNewMessage = Files.readAllLines(pathDecrypt);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            assert listPassNewMessage != null;
+            for (String messageBrute : listPassNewMessage) {
+                for (String resultBrute : listPassResult) {
+                    int position = -1;
+                    while ((position = bruteForce.find(messageBrute, resultBrute, position + 1)) != -1)
+                        System.out.println(position);
+
+                    System.out.println("Message -> " + messageBrute);
+                    System.out.print("Result -> " + resultBrute);
+                }
+            }
+        } else if (chose.equalsIgnoreCase("other")) {
+
+
+            Scanner scanner = new Scanner(System.in);
+            System.out.println("Пожалуйста, введите ключь для зашифровки данных!");
+            int key = scanner.nextInt();
+
+            List<String> listPass = null;
+            List<String> listPassNew = null;
+            try {
+                listPass = Files.readAllLines(pathEncryption);
+                listPassNew = Files.readAllLines(pathDecrypt);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            if (key > 0) {
+                assert listPass != null;
+                for (String message : listPass) {
+                    encryption(key, message);
+                }
+            }
+            System.out.println("Пожалуйста, Введите правильный ключь, для расшифровки данных!");
+            if (key == scanner.nextInt()) {
+                assert listPassNew != null;
+                for (String message : listPassNew) {
+                    decrypt(key, message);
+                }
+
+            } else {
+                System.out.println("Введенный вами ключь не соответствует! Повторите попытку снова!");
             }
         }
-        System.out.println("Пожалуйста, Введите правильный ключь, для расшифровки данных!");
-        if (key == scanner.nextInt()){
-        assert listPassNew != null;
-        for (String message : listPassNew) {
-            decrypt(key, message);
-        }
-
-        }else {
-            System.out.println("Введенный вами ключь не соответствует! Повторите попытку снова!");
-        }
-
-
-
-
-
-        }
+    }
 
     private static void encryption(int key, String message) {
         String string = "";
@@ -65,7 +91,7 @@ public class CryptAnalyzer {
                     c -= 33;
             }
             string += c;
-            try (FileWriter writer = new FileWriter(String.valueOf(pathNew))) {
+            try (FileWriter writer = new FileWriter(String.valueOf(pathDecrypt))) {
                 writer.write(string);
             } catch (IOException e) {
                 e.printStackTrace();
@@ -99,8 +125,4 @@ public class CryptAnalyzer {
         }
         System.out.println(message + " После расшифровки: " + string);
     }
-
-
-
-
 }
