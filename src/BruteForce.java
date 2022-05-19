@@ -10,7 +10,7 @@ public class BruteForce {
         for (int i = start; i < messageBrut.length(); i++) {
             if (resultBrut.charAt(0)==messageBrut.charAt(i)
                     && messageBrut.length()>=(i+resultBrut.length())
-                    && messageBrut.startsWith(resultBrut, i)) return i;
+                    && messageBrut.substring(i, i+resultBrut.length()).equals(resultBrut)) return i;
         }
         try (FileWriter writer = new FileWriter(String.valueOf(pathEncryption))) {
             writer.write(resultBrut);

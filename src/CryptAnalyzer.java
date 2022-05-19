@@ -17,7 +17,7 @@ public class CryptAnalyzer {
 
 
 
-        if (chose.equalsIgnoreCase("brut")) {
+        if (chose.equalsIgnoreCase("brute")) {
 
             List<String> listPassResult = null;
             List<String> listPassNewMessage = null;
@@ -32,10 +32,10 @@ public class CryptAnalyzer {
                 for (String resultBrute : listPassResult) {
                     int position = -1;
                     while ((position = bruteForce.find(messageBrute, resultBrute, position + 1)) != -1)
-                        System.out.println(position);
 
-                    //System.out.println("Message -> " + messageBrute);
-                    //System.out.print("Result -> " + resultBrute);
+                        System.out.println(position);
+                    System.out.println(resultBrute);
+
                 }
             }
         } else if (chose.equalsIgnoreCase("other")) {
