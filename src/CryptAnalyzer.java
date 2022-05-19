@@ -1,3 +1,6 @@
+import javafx.application.Application;
+import javafx.stage.Stage;
+
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -5,7 +8,7 @@ import java.nio.file.Path;
 import java.util.List;
 import java.util.Scanner;
 
-public class CryptAnalyzer {
+public class CryptAnalyzer extends Application {
     static Path pathEncryption = Path.of("C:\\Users\\Константин\\Desktop\\Work\\text.txt"); //путь в котором находиться кодовое слово, которое мы ищем для brute force
     static Path pathDecrypt = Path.of("C:\\Users\\Константин\\Desktop\\Work\\textNew.txt"); //путь к файлу с шифром в котором ищем слово для brute force
 
@@ -14,7 +17,6 @@ public class CryptAnalyzer {
         Scanner scanChoseMethod = new Scanner(System.in);
         System.out.println("Введите, пожалуйста название метода которым хотите воспользоватся \"brut\" или \"other\"");
         String chose = scanChoseMethod.nextLine();
-
 
 
         if (chose.equalsIgnoreCase("brute")) {
@@ -49,24 +51,27 @@ public class CryptAnalyzer {
             List<String> listPassNew = null;
             try {
                 listPass = Files.readAllLines(pathEncryption);
-                listPassNew = Files.readAllLines(pathDecrypt);
             } catch (IOException e) {
                 e.printStackTrace();
             }
-
             if (key > 0) {
                 assert listPass != null;
                 for (String message : listPass) {
                     encryption(key, message);
                 }
             }
+
             System.out.println("Пожалуйста, Введите правильный ключь, для расшифровки данных!");
+            try {
+                listPassNew = Files.readAllLines(pathDecrypt);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             if (key == scanner.nextInt()) {
                 assert listPassNew != null;
                 for (String message : listPassNew) {
                     decrypt(key, message);
                 }
-
             } else {
                 System.out.println("Введенный вами ключь не соответствует! Повторите попытку снова!");
             }
@@ -101,20 +106,18 @@ public class CryptAnalyzer {
 
     }
 
-        private static void decrypt(int key,String message) {
+    private static void decrypt(int key, String message) {
         int k = Integer.parseInt("-" + key);
         StringBuilder string = new StringBuilder();
         for (int i = 0; i < message.length(); i++) {
             char c = message.charAt(i);
-            if (c >= 'а' && c <= 'я')
-            {
+            if (c >= 'а' && c <= 'я') {
                 c += k % 33;
                 if (c < 'а')
                     c += 33;
                 if (c > 'я')
                     c -= 33;
-            } else if (c >= 'А' && c <= 'Я')
-            {
+            } else if (c >= 'А' && c <= 'Я') {
                 c += k % 33;
                 if (c < 'А')
                     c += 33;
@@ -124,5 +127,10 @@ public class CryptAnalyzer {
             string.append(c);
         }
         System.out.println(message + " После расшифровки: " + string);
+    }
+
+    @Override
+    public void start(Stage stage) throws Exception {
+
     }
 }
