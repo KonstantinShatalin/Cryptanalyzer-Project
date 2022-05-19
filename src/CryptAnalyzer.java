@@ -6,8 +6,8 @@ import java.util.List;
 import java.util.Scanner;
 
 public class CryptAnalyzer {
-    static Path pathEncryption = Path.of("C:\\Users\\Константин\\Desktop\\Work\\text.txt");
-    static Path pathDecrypt = Path.of("C:\\Users\\Константин\\Desktop\\Work\\textNew.txt");
+    static Path pathEncryption = Path.of("C:\\Users\\Константин\\Desktop\\Work\\text.txt"); //путь в котором находиться кодовое слово, которое мы ищем для brute force
+    static Path pathDecrypt = Path.of("C:\\Users\\Константин\\Desktop\\Work\\textNew.txt"); //путь к файлу с шифром в котором ищем слово для brute force
 
     public static void main(String[] args) {
         BruteForce bruteForce = new BruteForce();
