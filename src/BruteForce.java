@@ -1,28 +1,19 @@
 import java.io.FileWriter;
 import java.io.IOException;
-import java.nio.file.Path;
-
 
 public class BruteForce {
-    static Path pathResult = Path.of("C:\\Users\\Константин\\Desktop\\Work\\result.txt");
 
-    public int find(String messageBrut, String resultBrut, int start) {
-        for (int i = start; i < messageBrut.length(); i++) {
-            if (resultBrut.charAt(0)==messageBrut.charAt(i)
-                    && messageBrut.length()>=(i+resultBrut.length())
-                    && messageBrut.substring(i, i+resultBrut.length()).equals(resultBrut)) return i;
+    public static int find(String messageEncryption, String patternSearch, int startPositions) {
+        for (int i = startPositions; i < messageEncryption.length(); i++) {
+            if (patternSearch.charAt(0) == messageEncryption.charAt(i)
+                    && messageEncryption.length() >= (i + patternSearch.length())
+                    && messageEncryption.startsWith(patternSearch, i)) return i;
         }
-        try (FileWriter writer = new FileWriter(String.valueOf(pathResult))) {
-            writer.write(resultBrut);
+        try (FileWriter writer = new FileWriter(String.valueOf(CryptAnalyzer.pathResult))) {
+            writer.write(patternSearch);
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
         return -1;
     }
-
-
-
-
-
-
 }
