@@ -2,6 +2,15 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 public class BruteForce {
+    String messageEncryption;
+    String patternSearch;
+    int startPositions;
+
+    public BruteForce(String messageEncryption, String patternSearch, int startPositions) {
+        this.messageEncryption = messageEncryption;
+        this.patternSearch = patternSearch;
+        this.startPositions = startPositions;
+    }
 
     public static int find(String messageEncryption, String patternSearch, int startPositions) {
         for (int i = startPositions; i < messageEncryption.length(); i++) {

@@ -1,4 +1,11 @@
 public class Decryption {
+    int key;
+    String encryptionMessage;
+
+    public Decryption(int key, String encryptionMessage) {
+        this.key = key;
+        this.encryptionMessage = encryptionMessage;
+    }
 
     public static void decrypt(int key, String encryptionMessage) {
         int k = Integer.parseInt("-" + key);

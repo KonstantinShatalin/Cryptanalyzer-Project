@@ -2,6 +2,13 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 public class Encryption {
+    int key;
+    String decodedMessage;
+
+    public Encryption(int key, String decodedMessage) {
+        this.key = key;
+        this.decodedMessage = decodedMessage;
+    }
 
     public static void encryption(int key, String decodedMessage) {
         StringBuilder stringEncryption = new StringBuilder();
@@ -12,7 +19,7 @@ public class Encryption {
                 if (c < 'а')
                     c += 33;
                 if (c > 'я')
-                    c -= 33;
+                    c -= 32;
             } else if (c >= 'А' && c <= 'Я') {
                 c += key % 33;
                 if (c < 'А')

@@ -9,7 +9,6 @@ public class CryptAnalyzer{
     static Path pathDecrypt = Path.of("C:\\Users\\Константин\\Desktop\\Work\\textNew.txt"); //путь к файлу с шифром в котором ищем слово для brute force
     static Path pathResult = Path.of("C:\\Users\\Константин\\Desktop\\Work\\result.txt");   // путь к файлу с результатом метода brute force
 
-
     public static void main(String[] args) {
         Scanner scanChoseMethod = new Scanner(System.in);
         int keyEncryptDecrypt;
@@ -49,6 +48,8 @@ public class CryptAnalyzer{
                 for (String messageEncrypted : listPass) {
                     Encryption.encryption(keyEncryptDecrypt, messageEncrypted);
                 }
+            }else {
+                System.out.println("Введенный вами ключь не соответствует! Повторите попытку снова!");
             }
         } else if (choiceMethod.equals(UserChoice.DECRYPT.getChoice())) {
             System.out.println("Пожалуйста, Введите правильный ключь, для расшифровки данных!");
@@ -64,9 +65,11 @@ public class CryptAnalyzer{
                 for (String messageDecryption : listPassNew) {
                     Decryption.decrypt(keyEncryptDecrypt, messageDecryption);
                 }
+            }else {
+                System.out.println("Введенный вами ключь не соответствует! Повторите попытку снова!");
             }
         } else {
-                System.out.println("Введенный вами ключь не соответствует! Повторите попытку снова!");
+                System.out.println("Введите кооректный метод, который Вам предлагает система!");
             }
     }
 }
