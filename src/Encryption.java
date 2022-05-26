@@ -1,16 +1,13 @@
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.util.List;
 
 public class Encryption {
-    int key;
-    String decodedMessage;
-
-    public Encryption(int key, String decodedMessage) {
-        this.key = key;
-        this.decodedMessage = decodedMessage;
+    private Encryption() {
     }
 
-    public static void encryption(int key, String decodedMessage) {
+    private static void encryption(int key, String decodedMessage) {
         StringBuilder stringEncryption = new StringBuilder();
         for (int i = 0; i < decodedMessage.length(); i++) {
             char c = decodedMessage.charAt(i);
@@ -36,5 +33,23 @@ public class Encryption {
             }
         }
         System.out.println(decodedMessage + " После шифрования: " + stringEncryption);
+    }
+    public static void initializeEncryption(){
+        System.out.println("Пожалуйста, введите ключь для зашифровки данных!");
+        int keyEncrypt = CryptAnalyzer.scanChoseMethod.nextInt();
+        List<String> listPass;
+        try {
+            listPass = Files.readAllLines(CryptAnalyzer.pathEncryption);
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+            return;
+        }
+        if (keyEncrypt > 0) {
+            for (String messageEncrypted : listPass) {
+                Encryption.encryption(keyEncrypt, messageEncrypted);
+            }
+        }else {
+            System.out.println("Введенный вами ключь не соответствует! Повторите попытку снова!");
+        }
     }
 }

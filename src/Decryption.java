@@ -1,12 +1,10 @@
+import java.io.IOException;
+import java.nio.file.Files;
+import java.util.List;
+
 public class Decryption {
-    int key;
-    String encryptionMessage;
-
-    public Decryption(int key, String encryptionMessage) {
-        this.key = key;
-        this.encryptionMessage = encryptionMessage;
+    private Decryption() {
     }
-
     public static void decrypt(int key, String encryptionMessage) {
         int k = Integer.parseInt("-" + key);
         StringBuilder decodedString = new StringBuilder();
@@ -28,5 +26,23 @@ public class Decryption {
             decodedString.append(c);
         }
         System.out.println(encryptionMessage + " После расшифровки: " + decodedString);
+    }
+    public static void initializeDecryption(){
+        System.out.println("Пожалуйста, Введите правильный ключь, для расшифровки данных!");
+        int keyDecrypt = CryptAnalyzer.scanChoseMethod.nextInt();
+        List<String> listPassNew;
+        try {
+            listPassNew = Files.readAllLines(CryptAnalyzer.pathDecrypt);
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+            return;
+        }
+        if (keyDecrypt > 0) {
+            for (String messageDecryption : listPassNew) {
+                Decryption.decrypt(keyDecrypt, messageDecryption);
+            }
+        }else{
+            System.out.println("Введенный вами ключь не соответствует! Повторите попытку снова!");
+        }
     }
 }
