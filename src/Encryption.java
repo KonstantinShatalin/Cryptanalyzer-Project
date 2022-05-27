@@ -4,9 +4,9 @@ import java.nio.file.Files;
 import java.util.List;
 
 public class Encryption {
+
     private Encryption() {
     }
-
     private static void encryption(int key, String decodedMessage) {
         StringBuilder stringEncryption = new StringBuilder();
         for (int i = 0; i < decodedMessage.length(); i++) {
@@ -25,6 +25,7 @@ public class Encryption {
                     c -= 33;
             }
             stringEncryption.append(c);
+
             try (FileWriter writer = new FileWriter(String.valueOf(CryptAnalyzer.pathDecrypt))) {
                 writer.write(String.valueOf(stringEncryption));
             } catch (IOException e) {

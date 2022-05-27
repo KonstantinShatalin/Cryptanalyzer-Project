@@ -5,6 +5,7 @@ import java.util.List;
 public class Decryption {
     private Decryption() {
     }
+
     public static void decrypt(int key, String encryptionMessage) {
         int k = Integer.parseInt("-" + key);
         StringBuilder decodedString = new StringBuilder();
