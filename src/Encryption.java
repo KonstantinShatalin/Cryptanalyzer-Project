@@ -3,11 +3,9 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.util.List;
 
-public class Encryption {
+public class Encryption implements Initialize,WriterDate{
 
-    private Encryption() {
-    }
-    private static void encryption(int key, String decodedMessage) {
+    private void encryption(int key, String decodedMessage) {
         StringBuilder stringEncryption = new StringBuilder();
         for (int i = 0; i < decodedMessage.length(); i++) {
             char c = decodedMessage.charAt(i);
@@ -25,17 +23,25 @@ public class Encryption {
                     c -= 33;
             }
             stringEncryption.append(c);
-
-            try (FileWriter writer = new FileWriter(String.valueOf(CryptAnalyzer.pathDecrypt))) {
-                writer.write(String.valueOf(stringEncryption));
-            } catch (IOException e) {
-                System.out.println(e.getMessage());
-                return;
-            }
+            setWriter(stringEncryption);
         }
         System.out.println(decodedMessage + " После шифрования: " + stringEncryption);
     }
-    public static void initializeEncryption(){
+
+    @Override
+    public void setWriter(StringBuilder stringEncryption) {
+        try (FileWriter writer = new FileWriter(String.valueOf(CryptAnalyzer.pathDecrypt))) {
+            writer.write(String.valueOf(stringEncryption));
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+
+
+
+    @Override
+    public void initialize() {
         System.out.println("Пожалуйста, введите ключь для зашифровки данных!");
         int keyEncrypt = CryptAnalyzer.scanChoseMethod.nextInt();
         List<String> listPass;
@@ -47,10 +53,11 @@ public class Encryption {
         }
         if (keyEncrypt > 0) {
             for (String messageEncrypted : listPass) {
-                Encryption.encryption(keyEncrypt, messageEncrypted);
+                encryption(keyEncrypt, messageEncrypted);
             }
         }else {
             System.out.println("Введенный вами ключь не соответствует! Повторите попытку снова!");
         }
+
     }
 }
